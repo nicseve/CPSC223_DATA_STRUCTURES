@@ -6,9 +6,6 @@
 
 
 
-//WRITE SEPERATE SCREENING FUNCTION TO CHECK IF SYMB WITHIN WORD
-//IF TRUE-  RETURN
-
 char* letswap(char *s,int len){  //word modifer
 
 	char *s2;
@@ -42,7 +39,7 @@ char* letswap(char *s,int len){  //word modifer
 
 	if(len >= 2){  //check if word at least length 2 or greater
 		if(isupper(temp)){   //if first char upper chase
-          s[k+1] = toupper(s[k+1]); //k+1 to get next alphachar?? was 1 before
+          s[k+1] = toupper(s[k+1]); //k+1 to get next alphachar was 1 before
 		  temp = tolower(temp);
 		  s[++j] = temp;
 		}
@@ -83,18 +80,23 @@ char* symbcheck(char *s,int len){
 	int k = 0;
 
 
-	//STILL NEED TO PROPERLY PULL SUBSTRING AFTER NONALPHA CHAR
-
 	for(int i = 0; i < len;i++){
-		if(  !(isalpha(s[i]))){  //check if char before i is alpha and after is alpha
-			first[i] = s[i];
-			first[i+1] = '\0';
-			//printf("%s\n",&second[i+1]);
+        if (isalpha(s[i + 1])) {
+            if (isalpha(s[i - 1])) {
+                if (!(isalpha(s[i]))) {  //check if char before i is alpha and after is alpha
+                    first[i] = s[i];
+                    first[i + 1] = '\0';
 
-			return result = strcat( letswap(first,strlen(first)), letswap(&second[i+1],strlen(s)-i-1));
-			}
-		else{
-		 first[i] = s[i];}
+                    return result = strcat(letswap(first, strlen(first)), letswap(&second[i + 1], strlen(s) - i - 1));
+                } else {
+                    first[i] = s[i];
+                }
+            } else {
+                first[i] = s[i];
+            }
+        } else {
+            first[i] = s[i];
+        }
 		}
    first[0] = '\0';
 
@@ -114,7 +116,6 @@ void wordread(char *s){
 	while(i <= len){
 		if(isspace(s[i]) || s[i] == '\0' || s[i] == '\n' || s[i] == '\r'){
 			word[p] = '\0';
-			//printf("%s %d\n",word,p);
 			modword = symbcheck(word,p); //POINTER TO MODIFIED WORD STORED
 			printf("%s ",modword);
 
