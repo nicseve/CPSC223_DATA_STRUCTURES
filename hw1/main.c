@@ -10,7 +10,7 @@ char* letswap(char *s,int len){  //word modifer
 
 	char *s2;
 	char *s7;
-	char *s8;
+	char *s8 = (char *)malloc(sizeof(char) * 256);
 	char s3[len+3];
 	char s4[len+3];
 
@@ -28,7 +28,8 @@ char* letswap(char *s,int len){  //word modifer
 	}//move forward until first alpha char seen
 
     s3[k] = '\0'; //BEG OF WORD
-	//s8 = strcat(s8,s3);
+	s8 = strcat(s8,s3);
+
 
 	while(  !(isalpha(s[j])) ){
 		s4[i++] = s[j--];
@@ -65,21 +66,20 @@ char* letswap(char *s,int len){  //word modifer
 	if(j-k <= 3){  //if length of word less than 3 concat end1
 		s2 = strcat(s,end1); //S2 HOLDS WORD WITH CORRECT ENDING
 		//printf("%s\n",&s2[1]);
-
 		//ADD SYMBOLIC ENDING  STORED IN S4, S2 TRUNCATED AT K
 		s7 = strcat(&s2[k],s4);
 
 		//add symb beginning to truncated
-		//s8 = strcat(s8,&s7[1]);
-		return &s7[1];
+		s8 = strcat(s8,&s7[1]);
+		return s8;
 	}
 
 	else{
 		s2 = strcat(s,end2);
 		//printf("%s\n",&s2[1]);
 		s7 = strcat(&s2[k],s4);
-		//s8 = strcat(s8,&s7[1]);
-		return &s7[1];
+		s8 = strcat(s8,&s7[1]);
+		return s8;
 	}
 
 
@@ -123,10 +123,8 @@ int main(int argc, char **argv)
 	int size = 2;
 	int length;
 	char *line;
-	char *p;
 
 	line = malloc(size);
-	result = malloc(size);
 	assert(line);
 	length = 0;
 
