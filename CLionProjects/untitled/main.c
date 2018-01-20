@@ -6,7 +6,7 @@
 
 
 
-char* letswap(char *s,int len){  //word modifer
+char* letswap(char *s,int len){  //word modifier
 
 	char *s2;
 	char *s7;
@@ -30,7 +30,7 @@ char* letswap(char *s,int len){  //word modifer
     s3[k] = '\0'; //BEG OF WORD
 	s8 = strcat(s8,s3);
 
-	while(  !(isalpha(s[j])) ){
+	while(!(isalpha(s[j])) ){
 		s4[i--] = s[j--];
 	}
 	s4[len] = '\0';   //END OF WORD
@@ -39,8 +39,8 @@ char* letswap(char *s,int len){  //word modifer
 
 	if(len >= 2){  //check if word at least length 2 or greater
 		if(isupper(temp)){   //if first char upper chase
-          s[k+1] = toupper(s[k+1]); //k+1 to get next alphachar was 1 before
-		  temp = tolower(temp);
+          s[k+1] = (char) toupper(s[k + 1]); //k+1 to get next alphachar was 1 before
+		  temp = (char) tolower(temp);
 		  s[++j] = temp;
 		}
 
@@ -48,9 +48,10 @@ char* letswap(char *s,int len){  //word modifer
 			s[++j] = temp;
 		}
 	}
+
     //word is 1 or less chars so return with "an" appended
 	else {
-		return s2 = strcat(s,end1);
+		return strcat(s,end1);
 	}
 
 	//NULL TERMINATE TRIMMED ORIGINAL WORD
@@ -76,18 +77,15 @@ char* letswap(char *s,int len){  //word modifer
 char* symbcheck(char *s,int len){
 	char first[len*2];
 	char *second = s;
-	char *result = malloc(len*2);
-	int k = 0;
 
-
-	for(int i = 0; i < len;i++){
+    for(int i = 0; i < len;i++){
         if (isalpha(s[i + 1])) {
             if (isalpha(s[i - 1])) {
                 if (!(isalpha(s[i]))) {  //check if char before i is alpha and after is alpha
                     first[i] = s[i];
                     first[i + 1] = '\0';
+                    return strcat(letswap(first, strlen(first)), letswap(&second[i + 1], strlen(s) - i - 1));
 
-                    return result = strcat(letswap(first, strlen(first)), letswap(&second[i + 1], strlen(s) - i - 1));
                 } else {
                     first[i] = s[i];
                 }
@@ -97,9 +95,8 @@ char* symbcheck(char *s,int len){
         } else {
             first[i] = s[i];
         }
-		}
-   first[0] = '\0';
-
+    }
+   //first[0] = '\0';
    return letswap(s,strlen(s));
 }
 
