@@ -138,7 +138,7 @@ void wordread(char *s){
 }
 
 int main(int argc, char **argv) {
-    int c;
+    char c;
     char first;
     int init = 0;
     int init2 = 2;
@@ -175,7 +175,6 @@ int main(int argc, char **argv) {
 
     while ((c = fgetc(stdin)) != EOF) {
 
-
         if (isalpha(c) || c == '\n') {
 
             if (c != '\n') {
@@ -183,19 +182,24 @@ int main(int argc, char **argv) {
                 if (length == 1) {
                     first = c;
                 }
-            }
+                else if (length == 2 && isupper(first)){
+                    first = tolower(first);
+                    putchar(toupper(c));
+                    continue;
+                }
 
+                else if(length == 2 && isupper(c)){   //CHECK IF 2ND CHAR IS UPPERCASE AND NEEDS TO BE MADE LOWERCASE
+                    putchar(tolower(c));
+                    continue;
+                }
+            }
 
             if (c == '\n') {
                 if (length <= 0) {
                     putchar(c);
-
-                } else if (length <= 3) {
-                    printf("%can\n",first);
-                    length = 0;
-
-                } else {
-                    printf("%co\n",first);
+                }
+                else {
+                    printf(length <= 3 ? "%can\n" : "%co\n", first);
                     length = 0;
                 }
             }
@@ -203,43 +207,34 @@ int main(int argc, char **argv) {
             if (length > 1) {
                 putchar(c);
             }
-
         }
 
 
-         else if (isspace(c)) {
+        else if (isspace(c)) {
 
-            if (length <= 3) {
-                printf("%can ", first);
-                length = 0;
-                }
-            else{
-                printf("%co ", first);
-                length = 0;
-            }
-
-        }
-
-    else {
-        if(length > 0){
-            if (length <= 3) {
-                printf("%can", first);
+            if(length == 0){
                 putchar(c);
-                length = 0;
             }
-            else{
-                printf("%co", first);
-                putchar(c);
+
+            else {
+                printf(length <= 3 ? "%can " : "%co ", first);
                 length = 0;
             }
 
         }
-        else {
-            putchar(c);
+
+        else { //C == NON-ALPHA CHAR
+            if(length > 0){
+                    printf(length <= 3 ? "%can" : "%co", first);
+                    putchar(c);
+                    length = 0;
+            }
+
+            else {
+            putchar(c);  //OUTPUT NON-ALPHA CHAR
+            }
         }
     }
-
-}
 
 
 
