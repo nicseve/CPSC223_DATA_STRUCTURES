@@ -2,21 +2,31 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-char * encrypt(char* block, int n, int a, int b){
+void encrypt(char* block, int n, int a, int b){
     int i = 0;
-    char temp;
-    char *blockcopy = malloc(sizeof(char)*n);
-    blockcopy = strcpy(blockcopy,block);     //create copy of block and reference might need memcopy
+//    char *blockcopy = malloc(sizeof(char)*n);
+//    blockcopy = strcpy(blockcopy,block);     //create copy of block and reference might need memcopy
 
-    while(i < strlen(block)){
-        block[i] = blockcopy[((a*i) +b)%n];
-        i++;
+    while(i < n){
+        if ( (a*i+b)%n > strlen(block)-1){
+                printf("%c",'\0');
+                i++;
+        }
+        else {
+                printf("%c",block[((a * i) + b) % n]);
+                //block[i] = blockcopy[((a * i) + b) % n];
+                i++;
+            }
+        }
 
-    }
-    printf("%s",block);
-    free(blockcopy);
-    return block;
+//    while(i < strlen(block)){
+//        block[i] = blockcopy[((a*i) +b)%n];
+//        i++;
+//
+//    }
+    //printf("%s",block);
+    //free(blockcopy);
+//    return block;
 }
 
 
@@ -63,18 +73,18 @@ int main(int argc, char **argv)
             len = 0;
         }
     }
-
      //EOF REACHED CHECK BLOCK IS CORRECT LEN
-    if(i < n-1){
-        block[i] = '\0';
-        char null[]="\\0";   //not correct, encrypt function reads null char as two chars instead of one, incorrect indexing results
-        while(i < n){
-            strcat(block,null);
-            i++;
-        }
-    }
+//    if(i < n-1){
+//        block[i] = '\0';
+//        char null[]="\\0";   //not correct, encrypt function reads null char as two chars instead of one, incorrect indexing results
+//        while(i < n){
+//            strcat(block,null);
+//            i++;
+//        }
+//    }
+    block[i] = '\0';
     encrypt(block,n,a,b);
-    printf("%s",block);
+    //printf("%s",block);
 
     return 0;
 }
