@@ -1,0 +1,3 @@
+/home/march/CLionProjects/Hwk3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/march/CLionProjects/Hwk3/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/march/CLionProjects/Hwk3/cmake-build-debug/CMakeFiles/Hwk3.dir

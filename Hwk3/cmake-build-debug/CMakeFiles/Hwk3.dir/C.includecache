@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/march/CLionProjects/Hwk3/main.c
+stdio.h
+-
+string.h
+-
+stdlib.h
+-
+assert.h
+-
+math.h
+-
+ctype.h
+-
+
