@@ -115,9 +115,6 @@ Num * numAdd(const Num *x, const Num *y){
     return n;
 }
 
-
-//
-//
 //    int *res;
 //    res = malloc(sizeof(int) * l1+l2+1);
 //
