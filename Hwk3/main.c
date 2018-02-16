@@ -68,7 +68,7 @@ Num * numAdd(const Num *x, const Num *y){
     Num *n;
     n = malloc(sizeof(Num) + sizeof(int)*(maxLen+1));
     assert(n);
-    
+
     //initialize n-value array with 0's
     for(int j = 0; j < maxLen+1; j++){
         n->value[j] = 0;
@@ -115,6 +115,9 @@ Num * numAdd(const Num *x, const Num *y){
     return n;
 }
 
+
+//
+//
 //    int *res;
 //    res = malloc(sizeof(int) * l1+l2+1);
 //
@@ -151,131 +154,35 @@ Num * numMultiply2(const Num *x, const Num *y){
     size_t l1 = x->length;
     size_t l2 = y->length;
 
-    size_t minLen = l1 > l2 ? l2 : l1;
-    size_t maxLen = l1 > l2 ? l1 : l2;
-
-
-    int* min = l1 > l2 ? val2 : val1;
-    int* max = l1 > l2 ? val1 : val2;
-
-    int *res = malloc(sizeof(int)* l1+l2);
-    int sum = 0;
+    int *res = malloc(sizeof(int)* (l1+l2));
+    int prod = 0;
     int carry = 0;
     int pos1 = 0;
     int pos2 = 0;
 
-    for(int i = minLen-1; i >=0; i--){
+
+    for(long long i = l1-1; i >=0; i--){
         pos2 = 0;
-        sum = 0;
-        for(int j = maxLen-1; j >= 0; j--){
-            sum = (min[i]*max[j] + carry);
-            res[pos1+pos2] = sum+res[pos1+pos2]%10;
-            carry += sum+res[pos1+pos2]/10;
+        int cur = val1[i];
+        for(long long j = l2-1; j >= 0; j--){
+            prod = cur*val2[j] + carry;
+            carry = (res[pos1+pos2]+prod)/10;
+            res[pos1+pos2] = (res[pos1+pos2] + prod)%10;
             pos2++;
         }
-//        res[pos1+pos2] = carry;
+        res[pos1+pos2] = carry;
         carry = 0;
-        sum = 0;
-//        carry = 0;
         pos1++;
     }
-    //r//        carry = 0;
-res[l2+l1] = carry;
-    int i = 0;
-    while(i < l1+l2 ){
-        printf("%d",res[i]);
-        i++;
-    }
+    long long g = l1+l2;
+        while(g >= 0) {
+            printf("%d", res[g]);
+            g--;
+        }
 }
 
 
-
-//Num * numMultiply(const Num *x, const Num *y){
-//    int* val1 = x->value;
-//    int* val2 = y->value;
-//
-//    size_t l1 = x->length;
-//    size_t l2 = y->length;
-//
-//    size_t minLen = l1 > l2 ? l2 : l1;
-//    size_t maxLen = l1 > l2 ? l1 : l2;
-//
-//    int* min = l1 > l2 ? val2 : val1;
-//    int* max = l1 > l2 ? val1 : val2;
-//
-//    int* temp;
-//    int* sum;
-//    int* res;
-//
-//    temp = malloc(sizeof(int) * ((l1 * l2) + 1));
-////    sum = malloc(sizeof(int) * maxLen +1);
-//    res = malloc(sizeof(int) * maxLen + 1);
-//
-//    int carry = 0;
-//    int cur; //current digit from smaller number
-//    size_t zeroCount = minLen-1; //number of zeros to append to temp array after storing multiplied digits
-//
-//    int k = 0;
-//    for(int i = minLen-1; i >=0; i--){
-//        cur = min[i];
-//        for(int p = maxLen-1; p >= 0; p--){
-//            temp[k++] = (cur*max[p] + carry)%10;
-//            carry =  (int)floor((cur * max[p] + carry)/10);
-////            printf("%d",carry);
-//
-//        }
-//    }
-//    temp[k++] = carry;
-//
-//    int j = 0;
-//    while(j < zeroCount && k < (l1*l2+1)){
-//        temp[k++] = 0;
-//        j++;
-//    }
-//
-//    int w = 0;
-//
-//    if(minLen == 1){
-//        int g = 0;
-//        while(g < maxLen+1){
-//            res[w++] = temp[--k];
-//            g++;
-//        }
-//    }
-//    else {
-//        for (int z = (l1 * l2)-1; z >= 0; z -= 2) {
-//            if (z - 1 < 0) {
-//                res[w++] = temp[z];
-//            } else {
-//                res[w++] = temp[z] + temp[z - 1];
-//            }
-//        }
-//    }
-//
-//
-//    int i = 0;
-//    while(i < maxLen+1){
-//       printf("%d",res[i]);
-//       i++;
-//   }
-//}
-
-//int numGetDigit(Num *n, int i){
-//    long long val = n->value;
-//
-//    if(  (i > n->len-1)  || i < 0) {
-//        return 0;
-//    }
-//    else {
-//        for (; i > 0; i--) {
-//            val = (val / 10);
-//        }
-//        return (int) val % 10;
-//    }
-//}
-
 Num * numCreate(const char*s){
-    int val = 0;
     char cur;
     size_t len = strlen(s);
     long long i = 0;
@@ -321,25 +228,25 @@ Num * numCreate(const char*s){
     }
         n->length = (size_t) k;
 
-    int p = 0;
-    while(p < k) {
-//        printf("%d", n->value[p]);
-        p++;
-    }
-//    printf("\n%d",(int)n->length);
+//    int p = 0;
+//    while(p < k) {
+////        printf("%d", n->value[p]);
+//        p++;
+//    }
+////    printf("\n%d",(int)n->length);
     return n;
 }
 
 //breaks for values 10000, 100, etc/
 int main() {
-    char *s = "15";
-    char *p = "152";  //multiplication breaks for 0
+    char *s = "10000000000000000";
+    char *p = "120";  //multiplication breaks for 0
     FILE *f;
 
     Num *r;
     Num *w;
     Num *n;
-
+    Num *m;
 
 
 //    int c;
@@ -366,11 +273,12 @@ int main() {
 
     r = numCreate(s);
     w = numCreate(p);
-    n = numAdd(r,w);
+   // n = numAdd(r,w);
 
-    numPrint(n,stdout);
+    m = numMultiply2(r,w);
 
-//    numMultiply2(r,w);
+//    numPrint(n,stdout);
+    //numPrint(m,stdout);
 
     if(r == NULL) {
         return 0;
@@ -378,7 +286,6 @@ int main() {
 //
 //    numPrint(r,stdout);
     //n = numMultiply(r,w);
-
     //printf("%d",numGetDigit(r,3));
 
     numDestroy(r);
